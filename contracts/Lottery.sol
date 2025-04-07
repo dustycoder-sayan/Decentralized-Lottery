@@ -77,10 +77,6 @@ contract Lottery is Ownable, VRFConsumerBase {
         return uint256(price) * (10**11);
     }
 
-    function pickRandomWinner() private view returns(address) {
-        
-    }
-
     // override the fulfillRandomness function
     function fulfillRandomness(bytes32 _requestId, uint256 _randomness) internal override {
         require(lotteryState == LOTTERY_STATE.CALCULATING_WINNER, "You aren't there yet !");
