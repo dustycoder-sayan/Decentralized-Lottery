@@ -18,7 +18,7 @@ contract Lottery is Ownable, VRFConsumerBase {
     uint256 public feeInUsd;
     AggregatorV3Interface priceFeed;
     LOTTERY_STATE public lotteryState;
-    uint256 public fee;
+    uint96 public fee;
     bytes32 public keyHash;
 
     // VRFConsumerBase constructor also called 
@@ -28,7 +28,7 @@ contract Lottery is Ownable, VRFConsumerBase {
         address _priceFeedAddress,  
         address _vrfCoordinator,    // address of the chainlink contract on chain
         address _link,              // address of the link token of chainlink on the corresponding network
-        uint256 _fee,                // fee to be paid to the chainlink contract in terms of link
+        uint96 _fee,                // fee to be paid to the chainlink contract in terms of link
         bytes32 _keyHash
         )
         public
@@ -40,6 +40,7 @@ contract Lottery is Ownable, VRFConsumerBase {
         feeInUsd = 50 * (10 ** 18);
         priceFeed = AggregatorV3Interface(_priceFeedAddress);
         lotteryState = LOTTERY_STATE.CLOSED;
+        require(_fee <= type(uint96).max, "Fee exceeds uint96 range");
         fee = _fee;
         keyHash = _keyHash;
     }
@@ -69,7 +70,6 @@ contract Lottery is Ownable, VRFConsumerBase {
     function endLottery() public onlyOwner {
         lotteryState = LOTTERY_STATE.CALCULATING_WINNER;
         bytes32 requestId = requestRandomness(keyHash, fee);
-
     }
 
     function getEthValueInUsd() public view returns(uint256) {
