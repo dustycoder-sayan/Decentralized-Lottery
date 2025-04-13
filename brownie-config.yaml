@@ -8,15 +8,31 @@ compiler:
       - '@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.3.0'
 networks:
   default: development
-  sepolia:
-    pricefeed: '0x694AA1769357215DE4FAC081bf1f309aDC325306'
-    verify: True
   development:
-    verify: False
-  ganache-local:
-    verify: False
+    keyHash: '0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c'
+    fee: 100000000000000000
+    gasPrice: 1000000000
+  sepolia:
+    eth-usd-pricefeed: '0x694AA1769357215DE4FAC081bf1f309aDC325306'
+    vrf-coordinator: '0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625'
+    link-token: '0x779877A7B0D9E8603169DdbD7836e478b4624789'
+    keyHash: '0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c'
+    fee: 100000000000000000
+    gasPrice: 1000000000
+    verify: True
   mainnet-fork:
-    pricefeed: '0x694AA1769357215DE4FAC081bf1f309aDC325306'
+    eth-usd-pricefeed: '0x694AA1769357215DE4FAC081bf1f309aDC325306'
+    vrf-coordinator: '0xD7f86b4b8Cae7D942340FF628F82735b7a20893a'
+    link-token: '0x514910771AF9Ca656af840dff83E8264EcF986CA'
+    fee: 100000000000000000
+    gasPrice: 1000000000
     verify: False
+dotenv: .env
 wallets:
   from_key: ${PRIVATE_KEY}
+chainlink:
+  subscription_id: ${SUBSCRIPTION_ID}
+contracts:
+  ETH_USD_PRICE_FEED: 'eth-usd-price-feed'
+  VRF_COORDINATOR: 'vrf-coordinator'
+  LINK_TOKEN: 'link-token'
