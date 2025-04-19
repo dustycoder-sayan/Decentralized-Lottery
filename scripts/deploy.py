@@ -5,7 +5,7 @@ from time import sleep
 def deploy_lottery():
     print("Deploying Contract...")
     account = helper_scripts.get_account()
-    Lottery.deploy(
+    lottery_contract = Lottery.deploy(
         helper_scripts.get_contract(config["contracts"]["ETH_USD_PRICE_FEED"]).address,
         helper_scripts.get_contract(config["contracts"]["VRF_COORDINATOR"]).address,
         helper_scripts.get_contract(config["contracts"]["LINK_TOKEN"]).address,
@@ -17,6 +17,7 @@ def deploy_lottery():
         publish_source=config["networks"][network.show_active()].get("verify", False)
     )
     print("Contract Deployed !")
+    return lottery_contract
 
 def start_lottery():
     account = helper_scripts.get_account()

@@ -3,7 +3,7 @@ from brownie import (
     network, 
     config, 
     MockV3Aggregator, 
-    VRFCoordinatorV2Mock, 
+    VRFCoordinatorMock, 
     LinkToken, 
     Contract,
     interface
@@ -20,7 +20,7 @@ FORKED_ENVIRONMENTS = [
 
 NAME_TO_CONTRACT_MAP = {
     config["contracts"]["ETH_USD_PRICE_FEED"]: MockV3Aggregator,
-    config["contracts"]["VRF_COORDINATOR"]: VRFCoordinatorV2Mock,
+    config["contracts"]["VRF_COORDINATOR"]: VRFCoordinatorMock,
     config["contracts"]["LINK_TOKEN"]: LinkToken,
 }
 
@@ -61,14 +61,13 @@ def deploy_mocks(decimals=AGGREGATOR_DECIMALS, starting_ans=AGGREGATOR_STARTING_
             "from": get_account()
         }
     )
-    LinkToken.deploy(
+    link_contract = LinkToken.deploy(
         {
             "from": get_account()
         }
     )
-    VRFCoordinatorV2Mock.deploy(
-        config["networks"][network.show_active()].get("fee"),
-        config["networks"][network.show_active()].get("gasPrice"),
+    VRFCoordinatorMock.deploy(
+        link_contract.address, 
         {
             "from": get_account()
         }
