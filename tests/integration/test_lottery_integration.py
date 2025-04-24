@@ -1,7 +1,7 @@
 from scripts import deploy
 from scripts import helper_scripts
 
-from brownie import network, Contract, Lottery
+from brownie import network
 import pytest
 from time import sleep
 
